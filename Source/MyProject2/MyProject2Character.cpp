@@ -43,7 +43,7 @@ AMyProject2Character::AMyProject2Character()
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
+	CameraBoom->TargetArmLength = 600.0f; // The camera follows at this distance behind the character	
 	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 	CameraBoom->bInheritYaw = false;
 	CameraBoom->bInheritPitch = false;
@@ -80,14 +80,15 @@ void AMyProject2Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
-		// Jumping
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Move);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Interact);
 
+		// NOT NEEDED FOR THIS PROJECT
+		// Jumping
+		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		// Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Look);
 	}
@@ -120,6 +121,15 @@ void AMyProject2Character::Move(const FInputActionValue& Value)
 	}
 }
 
+// Interact with interactable Objects
+void AMyProject2Character::Interact(const FInputActionValue& Value) {
+	// TODO
+	UE_LOG(LogTemplateCharacter, Warning, TEXT("Interaction Button Clicked"), *GetNameSafe(this));
+}
+
+// FUNCTIONS WE DON'T CURRENTLY NEED
+
+// LOOK NOT NEEDED FOR THIS PROJECT
 void AMyProject2Character::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
