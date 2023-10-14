@@ -12,6 +12,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class AInteractable;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -27,6 +28,19 @@ class AMyProject2Character : public ACharacter
 	/** Follow camera */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	// SELECTED INTERACT INTERFACE
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Interactables, meta = (AllowPrivateAccess = "true")) 
+	IInteractInterface* SelectedInteractInterface;*/
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	FVector2D MovementVector;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	FVector LastInteractableDirection;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	float InteractTraceDistance = 200.f;
 	
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -61,6 +75,10 @@ protected:
 
 	/** Called for intertact input */
 	void Interact(const FInputActionValue& Value);
+
+private:
+
+	void HandleInteractables();
 			
 protected:
 	// APawn interface
@@ -68,6 +86,8 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay();
+
+	virtual void Tick(float DeltaTime) override;
 
 public:
 	/** Returns CameraBoom subobject **/

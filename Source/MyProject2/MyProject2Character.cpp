@@ -11,6 +11,10 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include <Kismet/GameplayStatics.h>
+#include "Math/Vector2D.h"
+#include "Engine/World.h"
+#include "DrawDebugHelpers.h"
+#include "InteractInterface.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -73,6 +77,60 @@ void AMyProject2Character::BeginPlay()
 	}
 }
 
+void AMyProject2Character::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	//HandleInteractables();
+}
+
+void AMyProject2Character::HandleInteractables()
+{
+	/*FVector MovementDirection = FVector(MovementVector.X, 0.f, MovementVector.Y);
+
+	if (!MovementDirection.IsZero())
+	{
+		LastInteractableDirection = FVector(MovementVector.X, 0.f, MovementVector.Y);
+	}*/
+
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this); // ignore character that owns this line trace
+	FHitResult OutHitResult;
+	FVector Start = GetActorLocation();
+	Start.X += 50.f;
+	FVector End = Start + GetActorForwardVector() * InteractTraceDistance;
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2, 0, 2);
+
+	bool didHit = GetWorld()->LineTraceSingleByChannel(OutHitResult, Start, End, ECC_GameTraceChannel1, CollisionParams);
+
+	if (didHit && OutHitResult.bBlockingHit && OutHitResult.GetActor()) {
+		if (GEngine) {
+			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("The Actor Being Hit is: %s"), *OutHit.GetActor()->GetName()));
+		}
+
+		IInteractInterface* HitInteractInterface = Cast<IInteractInterface>(OutHitResult.GetActor());
+
+		/*OutHit.GetActor()->GetClass()->ImplementsInterface(UInteractInterface::StaticClass());*/
+
+		if (HitInteractInterface)
+		{
+			//UE_LOG(LogTemplateCharacter, Warning, TEXT("JEBEM TI MATER"));
+
+			HitInteractInterface->InteractWithObject_Implementation(OutHitResult);
+			//SelectedInteractInterface = HitInteractInterface;
+		}
+		else
+		{
+			//SelectedInteractInterface = nullptr;
+		}
+	}
+	else 
+	{
+		//SelectedInteractInterface = nullptr;
+
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -101,7 +159,7 @@ void AMyProject2Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 void AMyProject2Character::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -122,12 +180,16 @@ void AMyProject2Character::Move(const FInputActionValue& Value)
 }
 
 // Interact with interactable Objects
-void AMyProject2Character::Interact(const FInputActionValue& Value) {
-	// TODO
-	UE_LOG(LogTemplateCharacter, Warning, TEXT("Interaction Button Clicked"), *GetNameSafe(this));
+void AMyProject2Character::Interact(const FInputActionValue& Value) 
+{
+	// we must get time that elapsed from press and pass it in Handle Interaction
+
+	HandleInteractables();
+
+	/*if (SelectedInteractInterface != nullptr){}*/
 }
 
-// FUNCTIONS WE DON'T CURRENTLY NEED
+// ---------------- FUNCTIONS WE DON'T CURRENTLY NEED --------------
 
 // LOOK NOT NEEDED FOR THIS PROJECT
 void AMyProject2Character::Look(const FInputActionValue& Value)
