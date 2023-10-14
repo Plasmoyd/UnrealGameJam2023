@@ -38,4 +38,9 @@ void AInteractable::InteractWithObject_Implementation(FHitResult OutHitResult)
 {
 	//TODO
 	UE_LOG(LogTemp, Warning, TEXT("INTERACTED"), InteractTime, RewardAmount);
+
+	if (CurrentTimeInteracting >= InteractTime)
+	{
+		CurrentTimeInteracting = 0.f;
+	}
 }

@@ -105,7 +105,7 @@ void AMyProject2Character::HandleInteractables()
 
 	if (didHit && OutHitResult.bBlockingHit && OutHitResult.GetActor()) {
 		if (GEngine) {
-			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("The Actor Being Hit is: %s"), *OutHit.GetActor()->GetName()));
+			//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, FString::Printf(TEXT("The Actor Being Hit is: %s"), *OutHit.GetActor()->GetName()));
 		}
 
 		IInteractInterface* HitInteractInterface = Cast<IInteractInterface>(OutHitResult.GetActor());
@@ -141,12 +141,15 @@ void AMyProject2Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Move);
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Interact);
+		/*EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Interact);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Ongoing, this, &AMyProject2Character::InteractTime);*/
+		/*EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AMyProject2Character::Interact);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &AMyProject2Character::Interact);*/
 
 		// NOT NEEDED FOR THIS PROJECT
 		// Jumping
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		// Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyProject2Character::Look);
 	}
@@ -184,9 +187,24 @@ void AMyProject2Character::Interact(const FInputActionValue& Value)
 {
 	// we must get time that elapsed from press and pass it in Handle Interaction
 
-	HandleInteractables();
+	if (GEngine) {
+		//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("INTERACTED")));
+	}
+
+	//HandleInteractables();
 
 	/*if (SelectedInteractInterface != nullptr){}*/
+}
+
+void AMyProject2Character::InteractTime(const FInputActionInstance& Instance)
+{
+	// we must get time that elapsed from press and pass it in Handle Interaction
+	float timeElapsed = Instance.GetElapsedTime();
+
+	if (GEngine) {
+		//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::Printf(TEXT("%f"), timeElapsed));
+		GEngine->AddOnScreenDebugMessage(1, 1, FColor::Cyan, "TIME " + FString::SanitizeFloat(Instance.GetElapsedTime()));
+	}
 }
 
 // ---------------- FUNCTIONS WE DON'T CURRENTLY NEED --------------

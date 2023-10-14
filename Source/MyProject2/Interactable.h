@@ -44,7 +44,10 @@ private:
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float InteractTime;
+	int32 InteractTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float CurrentTimeInteracting;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int32 RewardAmount;
@@ -54,7 +57,11 @@ private:
 
 public:
 
-	FORCEINLINE float GetInteractTime() const { return InteractTime; }
+	FORCEINLINE int32 GetInteractTime() const { return InteractTime; }
 	FORCEINLINE int32 GetRewardAmount() const { return RewardAmount; }
 	FORCEINLINE TaskDifficulty GetTaskDifficulty() const { return Difficulty; }
+	FORCEINLINE float GetCurrentTimeInteracting() const { return CurrentTimeInteracting; }
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE void SetCurrentTimeInteracting(float TimeInteracting) { this->CurrentTimeInteracting = TimeInteracting; }
 };

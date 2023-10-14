@@ -74,6 +74,9 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	/** Called for intertact input */
+	UFUNCTION()
+	void InteractTime(const FInputActionInstance& Instance);
+
 	void Interact(const FInputActionValue& Value);
 
 private:
