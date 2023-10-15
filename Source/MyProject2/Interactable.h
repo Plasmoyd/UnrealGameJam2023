@@ -70,6 +70,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TaskDifficulty Difficulty;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool isTaskRepeatable;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	bool isTaskActive = false;
+
 	FTimerHandle ProgressBarTimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -79,9 +85,11 @@ public:
 
 	FORCEINLINE int32 GetInteractTime() const { return InteractTime; }
 	FORCEINLINE int32 GetRewardAmount() const { return RewardAmount; }
+	//FORCEINLINE bool GetIsTaskActive()  { return isTaskActive; }
 	FORCEINLINE TaskDifficulty GetTaskDifficulty() const { return Difficulty; }
 	FORCEINLINE float GetCurrentTimeInteracting() const { return CurrentTimeInteracting; }
 
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE void SetCurrentTimeInteracting(float TimeInteracting) { this->CurrentTimeInteracting = TimeInteracting; }
+
 };
