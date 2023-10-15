@@ -47,6 +47,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void HideProgressBar();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowTaskBubble();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void HideTaskBubble();
+
 private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
