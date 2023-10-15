@@ -21,13 +21,13 @@ class AMyProject2Character : public ACharacter
 {
 	GENERATED_BODY()
 
-	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	USpringArmComponent* CameraBoom;
+	///** Camera boom positioning the camera behind the character */
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	//USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* FollowCamera;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* FollowCamera;*/
 
 	// SELECTED INTERACT INTERFACE
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Interactables, meta = (AllowPrivateAccess = "true")) 
@@ -94,8 +94,8 @@ protected:
 
 public:
 	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	//FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	//FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
 
