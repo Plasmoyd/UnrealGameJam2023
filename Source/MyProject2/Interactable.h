@@ -38,6 +38,15 @@ public:
 
 	virtual void InteractWithObject_Implementation(FHitResult OutHitResult) override; // ignore error
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ShowProgressBar();
+
+	UFUNCTION(BlueprintCallable)
+	void ShowProgressBar_Implementation();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideProgressBar();
+
 private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -54,6 +63,11 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TaskDifficulty Difficulty;
+
+	FTimerHandle ProgressBarTimerHandle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float ProgressBarHideTime = 2.f;
 
 public:
 
