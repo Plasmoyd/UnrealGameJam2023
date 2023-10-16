@@ -42,7 +42,7 @@ AMyProject2Character::AMyProject2Character()
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
-	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+	GetCharacterMovement()->BrakingDecelerationFalling = 150.0f;
 
 	////// Create a camera boom (pulls in towards the player if there is a collision)
 	////CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
