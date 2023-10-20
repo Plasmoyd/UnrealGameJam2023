@@ -71,7 +71,7 @@ private:
 	TaskDifficulty Difficulty;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	bool IsTaskRepeatable;
+	bool IsTaskRepeatable = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	bool IsTaskActive = false;
@@ -80,7 +80,7 @@ private:
 	int32 TaskCompletedCount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	int32 MaxRepeatableTask;
+	int32 MaxTimesRepeated = 5;
 
 	FTimerHandle ProgressBarTimerHandle;
 
